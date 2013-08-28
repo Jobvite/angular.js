@@ -21,7 +21,9 @@ function $ControllerProvider() {
    * @methodOf ng.$controllerProvider
    * @param {string} name Controller name
    * @param {Function|Array} constructor Controller constructor fn (optionally decorated with DI
-   *    annotations in the array notation).
+   *    annotations in the array notation.  Array notation for controllers will allow for another
+   *    registered controller to be given by name as the constructor, and the injector will 
+   *    instantiate the proper piece of code).
    */
   this.register = function(name, constructor) {
     if (isObject(name)) {
@@ -63,7 +65,7 @@ function $ControllerProvider() {
       function resolveControllerCode(expression, topControllerName) {
         function findRealController(controllerName) {
           var _controller = controllers[controllerName],
-          _nextController = _controller[_controller.length -1];
+              _nextController = _controller[_controller.length -1];
           searchedControllers[controllerName] = true;
 
           if(searchedControllers[_nextController]) {
